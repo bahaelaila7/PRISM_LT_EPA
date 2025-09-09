@@ -24,8 +24,8 @@ if __name__ == '__main__':
         year_files[ef.year][ef.month][ef.mode].append(ef)
     print(subprocess.call(['rm','-rf',output_file]))
     # coalesce vars
-    with tqdm(total = len(files)) as pbar:
-        with sqlite3.connect(output_file) as conn:
+    with sqlite3.connect(output_file) as conn:
+        with tqdm(total = len(files)) as pbar:
             for YEAR, year_dict in year_files.items():
                 for MONTH, month_dict in year_dict.items():
                     for MODE, mode_files in month_dict.items():
@@ -47,3 +47,7 @@ if __name__ == '__main__':
                         #print(df)
                         #sys.exit(0)
                         df.to_sql(MODE, conn, if_exists = 'append', index=False)
+        print("DUMPING DATA DONE. CREATING INDICES...")
+        conn.execute('CREATE UNIQUE INDEX IF NOT EXISTS monthly_idx ON monthly(POLYGON_ID,YEAR,MONTH);')
+        conn.execute('CREATE UNIQUE INDEX IF NOT EXISTS yearly_idx ON yearly(POLYGON_ID,YEAR);')
+        print("DONE")
