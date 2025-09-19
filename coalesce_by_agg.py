@@ -6,6 +6,8 @@ import sqlite3
 from tqdm.auto import tqdm
 import subprocess
 import sys
+import argparse
+from pathlib import Path
 
 import re
 pattern = re.compile(r'/([^/]+)/[^/]+/prism_([^_]+)_us_30s_(\d{4})(\d{2})?.parquet') #(var, year, month/None)
@@ -15,16 +17,20 @@ VARS=['ppt','tmin','tmean','tmax','vpdmin','vpdmax','tdmean']
 
 
 if __name__ == '__main__':
-    output_file = 'prism_data_coalesced.db'
-    all_files = sorted(glob.glob(r'./output/*/*/*.parquet'))
+    parser = argparse.ArgumentParser(prog='Aggregate Parquet files into sqlite')
+    parser.add_argument('parquet_basedir', type=Path)
+    parser.add_argument('output_db_file', type=Path)
+    args = parser.parse_args()
+    
+    all_files = sorted(glob.glob(rf'{args.parquet_basedir}/*/*/*.parquet'))
     files = [FileEntry(file, *m.groups()) for file in all_files if ((m:=pattern.search(file)) and m.groups() is not None) ]
     assert len(files) == len(all_files)
     year_files = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     for ef in files:
         year_files[ef.year][ef.month][ef.mode].append(ef)
-    print(subprocess.call(['rm','-rf',output_file]))
+    print(subprocess.call(['rm','-rf',args.output_db_file]))
     # coalesce vars
-    with sqlite3.connect(output_file) as conn:
+    with sqlite3.connect(args.output_db_file) as conn:
         with tqdm(total = len(files)) as pbar:
             for YEAR, year_dict in year_files.items():
                 for MONTH, month_dict in year_dict.items():

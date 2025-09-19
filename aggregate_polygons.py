@@ -1,4 +1,6 @@
 import sqlite3
+import argparse
+from pathlib import Path
 
 VARS=['ppt','tmin','tmean','tmax','vpdmin','vpdmax','tdmean']
 
@@ -41,7 +43,11 @@ def aggregate_sql(from_table, epa_level= 4):
     return output_table_name, sql
 
 if __name__ == '__main__':
-    with sqlite3.connect('prism_data_coalesced.db') as conn:
+    parser = argparse.ArgumentParser(prog='Aggregate statistics of all polygons by EPA Ecoregion')
+    parser.add_argument('db_file', type=Path)
+    args = parser.parse_args()
+
+    with sqlite3.connect(args.db_file) as conn:
         cur = conn.cursor()
         for epa_level in [3,4]:
             print(f'AGGREGATING EPA_L{epa_level}_POLYGONS')
