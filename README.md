@@ -1,10 +1,10 @@
 # PRISM_LT by EPA Ecoregions
 
-Scripts to download and preprocess the PRISM longitudinal climate data, aggregating spatially by [EPA Ecoregions](https://www.epa.gov/eco-research/level-iii-and-iv-ecoregions-continental-united-states).
+Scripts to download and preprocess the [PRISM](https://prism.oregonstate.edu/) longitudinal climate dataset, aggregating spatially by [EPA Ecoregions](https://www.epa.gov/eco-research/level-iii-and-iv-ecoregions-continental-united-states).
 
 I have also committed the processed database `prism_lt_epa.db` through git-lfs (~1.9GB)
 
-To get the database file, just clone this repo and do `$git lfs pull` 
+To get the database file, just clone this repo and do `git lfs pull` 
 
 
 
@@ -12,7 +12,9 @@ To get the database file, just clone this repo and do `$git lfs pull`
 
 `$sh run.sh`
 
-### WARNING: The PRISM_LT dataset is huge; As of this writing, it's ~559GB and spans from Jan 1895 to Feb 2025. As such I have commented the download command in `run.sh`. Uncomment the line if you need to download PRISM_LT data.
+The script will download the EPA L4 Ecoregions (without state boundaries), and PRISM_LT data, then it will start processing to produce `prism_lt_epa.db`.
+
+### WARNING: The PRISM_LT dataset is huge; As of this writing, it's ~559GB and spans Jan 1895 to Feb 2025. As such I have commented the download command in `run.sh`. Uncomment the line if you want to download PRISM_LT data.
 
 
 
