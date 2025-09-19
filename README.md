@@ -4,13 +4,13 @@ Scripts to download and preprocess the [PRISM](https://prism.oregonstate.edu/) l
 
 I have also committed the processed database `prism_lt_epa.db` through git-lfs (~1.9GB)
 
-To get the database file, just clone this repo and do `git lfs pull` 
+If you just need final database file, just clone this repo and do `git lfs pull`. Do not run `run.sh`.
 
 
 
 ## Usage
 
-`$sh run.sh`
+`sh run.sh`
 
 The script will download the EPA L4 Ecoregions (without state boundaries), and PRISM_LT data, then it will start processing to produce `prism_lt_epa.db`.
 
