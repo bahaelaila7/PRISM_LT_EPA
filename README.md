@@ -1,6 +1,6 @@
 # PRISM_LT by EPA Ecoregions
 
-Scripts to download and preprocess the PRISM longitudinal climate data, aggregating spatially by EPA Ecoregions
+Scripts to download and preprocess the PRISM longitudinal climate data, aggregating spatially by [EPA Ecoregions](https://www.epa.gov/eco-research/level-iii-and-iv-ecoregions-continental-united-states).
 
 I have also committed the processed database `prism_lt_epa.db` through git-lfs (~1.9GB)
 
